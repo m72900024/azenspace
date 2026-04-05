@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>後台 — azenspace</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <nav class="admin-nav">
+    <h1>azenspace 後台</h1>
+    <div style="display:flex;gap:0.75rem;align-items:center">
+      <a href="index.html" style="color:var(--muted);font-size:0.9rem">← 返回網站</a>
+      <button id="logout-btn">登出</button>
+    </div>
+  </nav>
+
+  <div class="admin-wrap">
+    <!-- 文章列表 -->
+    <section>
+      <div class="section-header">
+        <h2>所有文章</h2>
+        <button id="new-post-btn" class="btn-primary">+ 新增</button>
+      </div>
+      <ul id="post-list" class="post-list">
+        <li class="loading">載入中…</li>
+      </ul>
+    </section>
+
+    <!-- 表單 -->
+    <section id="form-section">
+      <div class="section-header">
+        <h2 id="form-title">新增文章</h2>
+      </div>
+      <form id="post-form" class="post-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>標題 *</label>
+            <input name="title" required placeholder="文章標題">
+          </div>
+          <div class="form-group">
+            <label>Slug（URL 識別碼）</label>
+            <input name="slug" placeholder="留空自動產生">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>類型</label>
+            <select name="type">
+              <option value="blog">文章</option>
+              <option value="work">作品</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>狀態</label>
+            <select name="status">
+              <option value="draft">草稿</option>
+              <option value="published">發布</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>摘要（卡片預覽，150字內）</label>
+          <input name="summary" placeholder="簡短描述">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>封面圖片 URL</label>
+            <input name="coverImage" type="url" placeholder="https://...">
+          </div>
+          <div class="form-group">
+            <label>外部連結（作品用）</label>
+            <input name="externalUrl" type="url" placeholder="https://github.com/...">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>標籤（逗號分隔）</label>
+          <input name="tags" placeholder="web, design, react">
+        </div>
+        <div class="form-group full">
+          <label>內容（支援 Markdown）</label>
+          <textarea name="content" placeholder="# 標題&#10;&#10;內容..."></textarea>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" name="featured" id="featured">
+          <label for="featured">置頂精選</label>
+        </div>
+        <div class="form-actions">
+          <button type="button" id="cancel-btn">取消</button>
+          <button type="submit" class="btn-primary">儲存</button>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <script type="module" src="js/admin.js"></script>
+</body>
+</html>

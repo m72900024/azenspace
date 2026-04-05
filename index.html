@@ -1,11 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>azenspace</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>azenspace</title>
+  <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-<h1>hello azenspace</h1>
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">azenspace</a>
+    <div class="nav-links">
+      <a href="index.html">首頁</a>
+      <a href="admin-login.html">後台</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <h1 id="hero-title">Azen 的空間</h1>
+    <p id="hero-bio">作品與文字的集合。</p>
+    <div class="hero-links">
+      <a id="link-github" href="https://github.com/m72900024" target="_blank">↗ GitHub</a>
+    </div>
+  </section>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-type="all">全部</button>
+    <button class="filter-btn" data-type="work">作品</button>
+    <button class="filter-btn" data-type="blog">文章</button>
+  </div>
+
+  <div id="cards-grid" class="cards-grid"></div>
+
+  <div class="load-more-wrap">
+    <button id="load-more" class="btn">載入更多</button>
+  </div>
+
+  <script type="module" src="js/home.js"></script>
 </body>
 </html>
