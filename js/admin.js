@@ -1,5 +1,7 @@
 import { requireAdmin, logout } from './auth.js';
-import { fetchAllPosts, savePost, deletePost } from './db.js';
+import { fetchAllPosts, savePost, deletePost, deleteComment } from './db.js';
+import { db } from './firebase-config.js';
+import { collection, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 let editingId = null;
 
@@ -62,6 +64,7 @@ function fillForm(post) {
   form.querySelector('[name=status]').value = post.status || 'draft';
   form.querySelector('[name=featured]').checked = !!post.featured;
   form.querySelector('[name=externalUrl]').value = post.externalUrl || '';
+  form.querySelector('[name=category]').value = post.category || '3d-print';
 }
 
 function clearForm() {
@@ -92,3 +95,38 @@ form.addEventListener('submit', async (e) => {
 });
 
 loadList();
+
+async function loadComments() {
+  const listEl = document.getElementById('comments-admin-list');
+  const snap = await getDocs(
+    query(collection(db, 'comments'), orderBy('createdAt', 'desc'))
+  );
+  const comments = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  if (comments.length === 0) {
+    listEl.innerHTML = '<li class="empty">沒有留言</li>';
+    return;
+  }
+  listEl.innerHTML = comments.map(c => {
+    const date = c.createdAt?.toDate
+      ? c.createdAt.toDate().toLocaleDateString('zh-TW') : '';
+    return `
+      <li class="post-item">
+        <div class="post-item-info">
+          <strong>${c.nickname}</strong>
+          <span style="color:var(--muted);font-size:0.85rem">${c.postSlug} · ${date}</span>
+          <span style="font-size:0.9rem">${c.content.substring(0, 60)}${c.content.length > 60 ? '…' : ''}</span>
+        </div>
+        <div class="post-item-actions">
+          <button class="btn-danger" onclick="confirmDeleteComment('${c.id}')">刪除</button>
+        </div>
+      </li>`;
+  }).join('');
+}
+
+window.confirmDeleteComment = async (id) => {
+  if (!confirm('刪除此留言？')) return;
+  await deleteComment(id);
+  await loadComments();
+};
+
+loadComments();
