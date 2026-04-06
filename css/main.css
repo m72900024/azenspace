@@ -386,3 +386,25 @@ time { font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
   font-weight: 600;
   margin-top: 0.5rem;
 }
+
+/* ── Category Header ── */
+.category-header {
+  text-align: center;
+  padding: 3rem 2rem 2rem;
+  max-width: 640px;
+  margin: 0 auto;
+}
+.category-header .btn-back {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+}
+.cat-header-icon { font-size: 3rem; display: block; margin-bottom: 0.5rem; }
+.category-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.category-header p {
+  color: var(--muted);
+  font-size: 1rem;
+}
