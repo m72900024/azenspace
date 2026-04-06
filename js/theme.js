@@ -23,4 +23,13 @@ apply(getPreferred());
 document.addEventListener('DOMContentLoaded', () => {
   const btn = document.getElementById('theme-toggle');
   if (btn) btn.addEventListener('click', toggle);
+
+  const menuBtn = document.getElementById('menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  if (menuBtn && navLinks) {
+    menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+  }
 });

@@ -535,3 +535,48 @@ time { font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
   color: var(--accent);
   text-decoration: none;
 }
+
+/* ── Hamburger ── */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .menu-toggle { display: block; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    flex-direction: column;
+    padding: 1rem 2rem;
+    gap: 1rem;
+  }
+  .nav-links.open { display: flex; }
+
+  .hero { padding: 3rem 1.5rem 2rem; }
+  .hero h1 { font-size: 1.8rem; }
+
+  .cat-grid { grid-template-columns: 1fr 1fr; gap: 1rem; padding: 0 1rem 2rem; }
+  .cards-grid { grid-template-columns: 1fr; gap: 1rem; padding: 0 1rem 1rem; }
+
+  .post-header { padding: 0 1rem; }
+  .post-body { padding: 0 1rem; }
+  .comments-section { padding: 0 1rem; padding-top: 2rem; }
+
+  .about-page { padding: 2rem 1rem; }
+
+  .filter-bar { flex-wrap: wrap; }
+}
+
+@media (max-width: 400px) {
+  .cat-grid { grid-template-columns: 1fr; }
+}
