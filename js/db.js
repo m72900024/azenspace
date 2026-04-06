@@ -46,6 +46,7 @@ export async function savePost(data, postId = null) {
     title: data.title,
     slug: data.slug || slugify(data.title),
     type: data.type,
+    category: data.category || 'uncategorized',
     summary: data.summary,
     content: data.content,
     coverImage: data.coverImage || '',
@@ -82,4 +83,59 @@ function slugify(str) {
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-')
     .trim();
+}
+
+export async function fetchPostsByCategory(category, lastDoc = null) {
+  let constraints = [
+    where('status', '==', 'published'),
+    where('category', '==', category),
+    orderBy('createdAt', 'desc'),
+    limit(PAGE_SIZE)
+  ];
+  if (lastDoc) constraints.push(startAfter(lastDoc));
+
+  const snap = await getDocs(query(collection(db, 'posts'), ...constraints));
+  return {
+    posts: snap.docs.map(d => ({ id: d.id, ...d.data() })),
+    lastDoc: snap.docs[snap.docs.length - 1] || null
+  };
+}
+
+export async function fetchCategoryCounts() {
+  const snap = await getDocs(
+    query(collection(db, 'posts'), where('status', '==', 'published'))
+  );
+  const counts = {};
+  snap.docs.forEach(d => {
+    const cat = d.data().category || 'uncategorized';
+    counts[cat] = (counts[cat] || 0) + 1;
+  });
+  return counts;
+}
+
+export async function fetchAllPublishedPosts() {
+  const snap = await getDocs(
+    query(collection(db, 'posts'), where('status', '==', 'published'), orderBy('createdAt', 'desc'))
+  );
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+export async function fetchComments(postSlug) {
+  const snap = await getDocs(
+    query(collection(db, 'comments'), where('postSlug', '==', postSlug), orderBy('createdAt', 'desc'))
+  );
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+export async function addComment(postSlug, nickname, content) {
+  return addDoc(collection(db, 'comments'), {
+    postSlug,
+    nickname,
+    content,
+    createdAt: serverTimestamp()
+  });
+}
+
+export async function deleteComment(commentId) {
+  await deleteDoc(doc(db, 'comments', commentId));
 }
