@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>azenspace</title>
+  <title>搜尋 — azenspace</title>
   <link rel="stylesheet" href="css/main.css">
   <script src="js/theme.js"></script>
 </head>
@@ -20,19 +20,14 @@
     </div>
   </nav>
 
-  <div class="category-header">
-    <a href="index.html" class="btn-back">← 返回首頁</a>
-    <span id="cat-icon" class="cat-header-icon"></span>
-    <h1 id="cat-title"></h1>
-    <p id="cat-desc"></p>
+  <div class="search-page">
+    <div class="search-bar-wrap">
+      <input id="search-input" type="text" placeholder="搜尋文章…" autofocus>
+    </div>
+    <p id="search-status" class="search-status"></p>
+    <div id="search-results" class="cards-grid"></div>
   </div>
 
-  <div id="cards-grid" class="cards-grid"></div>
-
-  <div class="load-more-wrap">
-    <button id="load-more" class="btn">載入更多</button>
-  </div>
-
-  <script type="module" src="js/category.js"></script>
+  <script type="module" src="js/search.js"></script>
 </body>
 </html>
