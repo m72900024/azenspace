@@ -1,4 +1,5 @@
 import { fetchPostBySlug } from './db.js';
+import { initComments } from './comments.js';
 
 const params = new URLSearchParams(location.search);
 const slug = params.get('slug');
@@ -41,4 +42,6 @@ fetchPostBySlug(slug).then(post => {
     btn.href = post.externalUrl;
     btn.style.display = 'inline-flex';
   }
+
+  initComments(slug);
 });
